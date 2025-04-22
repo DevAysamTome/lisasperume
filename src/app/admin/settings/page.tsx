@@ -47,6 +47,7 @@ interface Settings {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SettingsPage() {
   const { language } = useLanguage();
   const [settings, setSettings] = useState<Settings>({

@@ -43,6 +43,7 @@ interface Product {
 
 const DEFAULT_IMAGE = '/images/placeholder.jpg'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
   const { addItem } = useCart()

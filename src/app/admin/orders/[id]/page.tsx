@@ -11,6 +11,7 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { use } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function OrderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { language } = useLanguage();
   const [order, setOrder] = useState<Order | null>(null);

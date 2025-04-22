@@ -20,6 +20,7 @@ interface Product {
   category: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q');

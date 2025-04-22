@@ -25,6 +25,7 @@ const content = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

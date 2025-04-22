@@ -19,6 +19,7 @@ interface ContactInfo {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ContactPage() {
   const { language } = useLanguage();
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);

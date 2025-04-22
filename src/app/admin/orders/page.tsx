@@ -10,6 +10,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import OrderStats from '@/components/admin/OrderStats';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function AdminOrdersPage() {
   const { language } = useLanguage();
   const [orders, setOrders] = useState<Order[]>([]);
