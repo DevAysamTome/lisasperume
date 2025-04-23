@@ -55,8 +55,8 @@ export default function AdminNavbar() {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Logo */}
-      <div className="flex items-center justify-center h-20 px-6 border-b border-gray-100">
+      {/* Logo - Hidden on mobile since it's in the header */}
+      <div className="hidden md:flex items-center justify-center h-20 px-6 border-b border-gray-100">
         <Link href="/admin" className="flex items-center space-x-3">
           <Image
             src="/logo.png"
@@ -70,7 +70,7 @@ export default function AdminNavbar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -84,7 +84,7 @@ export default function AdminNavbar() {
               }`}
             >
               <svg
-                className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-5 w-5 ${
+                className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-5 w-5 flex-shrink-0 ${
                   isActive ? 'text-indigo-600' : 'text-gray-400'
                 }`}
                 fill="none"
@@ -94,7 +94,7 @@ export default function AdminNavbar() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
-              {item.name}
+              <span className="truncate">{item.name}</span>
             </Link>
           );
         })}
@@ -107,7 +107,7 @@ export default function AdminNavbar() {
           className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors duration-200"
         >
           <svg
-            className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-5 w-5 text-gray-400`}
+            className={`${language === 'ar' ? 'ml-3' : 'mr-3'} h-5 w-5 flex-shrink-0 text-gray-400`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -115,7 +115,7 @@ export default function AdminNavbar() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          {t.signOut}
+          <span className="truncate">{t.signOut}</span>
         </button>
       </div>
     </div>

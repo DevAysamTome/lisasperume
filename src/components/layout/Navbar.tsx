@@ -99,9 +99,18 @@ export default function Navbar() {
             <SearchBar />
             <button
               onClick={toggleLanguage}
-              className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors"
+              className="group relative flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-all duration-300"
             >
-              {language === 'en' ? 'عربي' : 'English'}
+              <div className="relative w-6 h-6 overflow-hidden rounded-full">
+                <div className={`absolute inset-0 transition-transform duration-300 ${language === 'en' ? 'translate-x-0' : '-translate-x-full'}`}>
+                  <img src="/flags/gb.svg" alt="English" className="w-6 h-6 rounded-full" />
+                </div>
+                <div className={`absolute inset-0 transition-transform duration-300 ${language === 'ar' ? 'translate-x-0' : 'translate-x-full'}`}>
+                  <img src="/flags/sa.svg" alt="Arabic" className="w-6 h-6 rounded-full" />
+                </div>
+              </div>
+
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full" />
             </button>
             <Link href="/favorites" className="relative">
               <Heart className="h-6 w-6 text-gray-700 hover:text-gray-900 transition-colors" />
@@ -124,7 +133,7 @@ export default function Navbar() {
           {/* Mobile Actions */}
           <div className="flex md:hidden items-center space-x-4">
             <Link href="/favorites" className="relative">
-              <Heart className="h-6 w-6 text-gray-700" />
+              <Heart className="h-6 w-6 text-gray-700 hover:text-gray-900 transition-colors" />
               {favoriteCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {favoriteCount}
@@ -132,7 +141,7 @@ export default function Navbar() {
               )}
             </Link>
             <Link href="/cart" className="relative">
-              <FaShoppingBag className="h-6 w-6 text-gray-700" />
+              <FaShoppingBag className="h-6 w-6 text-gray-700 hover:text-gray-900 transition-colors" />
               {itemCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {itemCount}
@@ -141,12 +150,13 @@ export default function Navbar() {
             </Link>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-gray-900 p-2"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
             >
+              <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <FaTimes className="h-6 w-6" />
+                <FaTimes className="block h-6 w-6" aria-hidden="true" />
               ) : (
-                <FaBars className="h-6 w-6" />
+                <FaBars className="block h-6 w-6" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -160,7 +170,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden"
+            className="md:hidden absolute top-16 inset-x-0 bg-white shadow-lg rounded-b-lg z-50"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
@@ -199,6 +209,24 @@ export default function Navbar() {
               >
                 {language === 'en' ? 'Favorites' : 'المفضلة'}
               </Link>
+              <div className="border-t border-gray-200 pt-2">
+                <button
+                  onClick={toggleLanguage}
+                  className="group flex items-center gap-2 w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all duration-300"
+                >
+                  <div className="relative w-6 h-6 overflow-hidden rounded-full">
+                    <div className={`absolute inset-0 transition-transform duration-300 ${language === 'en' ? 'translate-x-0' : '-translate-x-full'}`}>
+                      <img src="/flags/gb.svg" alt="English" className="w-6 h-6 rounded-full" />
+                    </div>
+                    <div className={`absolute inset-0 transition-transform duration-300 ${language === 'ar' ? 'translate-x-0' : 'translate-x-full'}`}>
+                      <img src="/flags/sa.svg" alt="Arabic" className="w-6 h-6 rounded-full" />
+                    </div>
+                  </div>
+                  <span className="transition-all duration-300 group-hover:scale-105">
+                    {language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+                  </span>
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

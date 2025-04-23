@@ -25,6 +25,16 @@ export default function CheckoutPage() {
     notes: ''
   });
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    country: ''
+  });
+
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = 0; // Fixed shipping cost
   const total = subtotal + shipping;
@@ -34,8 +44,78 @@ export default function CheckoutPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    const newErrors = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      country: ''
+    };
+
+    let isValid = true;
+
+    // First Name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = language === 'en' ? 'First name is required' : 'الاسم الأول مطلوب';
+      isValid = false;
+    }
+
+    // Last Name validation
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = language === 'en' ? 'Last name is required' : 'اسم العائلة مطلوب';
+      isValid = false;
+    }
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = language === 'en' ? 'Email is required' : 'البريد الإلكتروني مطلوب';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = language === 'en' ? 'Invalid email format' : 'صيغة البريد الإلكتروني غير صحيحة';
+      isValid = false;
+    }
+
+    // Phone validation
+    if (!formData.phone.trim()) {
+      newErrors.phone = language === 'en' ? 'Phone number is required' : 'رقم الهاتف مطلوب';
+      isValid = false;
+    } else if (!/^[\d\s+-]+$/.test(formData.phone)) {
+      newErrors.phone = language === 'en' ? 'Invalid phone number format' : 'صيغة رقم الهاتف غير صحيحة';
+      isValid = false;
+    }
+
+    // Address validation
+    if (!formData.address.trim()) {
+      newErrors.address = language === 'en' ? 'Address is required' : 'العنوان مطلوب';
+      isValid = false;
+    }
+
+    // City validation
+    if (!formData.city.trim()) {
+      newErrors.city = language === 'en' ? 'City is required' : 'المدينة مطلوبة';
+      isValid = false;
+    }
+
+    // Country validation
+    if (!formData.country.trim()) {
+      newErrors.country = language === 'en' ? 'Country is required' : 'البلد مطلوب';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -122,8 +202,13 @@ export default function CheckoutPage() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                      errors.firstName ? 'border-red-500' : 'border-amber-200'
+                    }`}
                   />
+                  {errors.firstName && (
+                    <p className="mt-1 text-sm text-red-500 font-arabic">{errors.firstName}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-amber-700 mb-1 font-arabic">
@@ -135,8 +220,13 @@ export default function CheckoutPage() {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                      errors.lastName ? 'border-red-500' : 'border-amber-200'
+                    }`}
                   />
+                  {errors.lastName && (
+                    <p className="mt-1 text-sm text-red-500 font-arabic">{errors.lastName}</p>
+                  )}
                 </div>
               </div>
 
@@ -150,8 +240,13 @@ export default function CheckoutPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                    errors.email ? 'border-red-500' : 'border-amber-200'
+                  }`}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500 font-arabic">{errors.email}</p>
+                )}
               </div>
 
               <div>
@@ -164,8 +259,13 @@ export default function CheckoutPage() {
                   value={formData.phone}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                    errors.phone ? 'border-red-500' : 'border-amber-200'
+                  }`}
                 />
+                {errors.phone && (
+                  <p className="mt-1 text-sm text-red-500 font-arabic">{errors.phone}</p>
+                )}
               </div>
 
               <div>
@@ -178,8 +278,13 @@ export default function CheckoutPage() {
                   value={formData.address}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                    errors.address ? 'border-red-500' : 'border-amber-200'
+                  }`}
                 />
+                {errors.address && (
+                  <p className="mt-1 text-sm text-red-500 font-arabic">{errors.address}</p>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,8 +298,13 @@ export default function CheckoutPage() {
                     value={formData.city}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                      errors.city ? 'border-red-500' : 'border-amber-200'
+                    }`}
                   />
+                  {errors.city && (
+                    <p className="mt-1 text-sm text-red-500 font-arabic">{errors.city}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-amber-700 mb-1 font-arabic">
@@ -206,8 +316,13 @@ export default function CheckoutPage() {
                     value={formData.country}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent ${
+                      errors.country ? 'border-red-500' : 'border-amber-200'
+                    }`}
                   />
+                  {errors.country && (
+                    <p className="mt-1 text-sm text-red-500 font-arabic">{errors.country}</p>
+                  )}
                 </div>
               </div>
 

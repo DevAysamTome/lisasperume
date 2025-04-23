@@ -160,7 +160,7 @@ export default function Footer() {
         <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-xs sm:text-sm">
             &copy; {new Date().getFullYear()} {settings?.storeName_en || settings?.storeName_ar}.{' '}
-            {language === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة لدى شركة تكنو كور'}
+            {language === 'en' ? 'All rights reserved to TechnoCore , LLC.' : 'جميع الحقوق محفوظة لدى شركة تكنو كور'}
           </p>
         </div>
       </div>

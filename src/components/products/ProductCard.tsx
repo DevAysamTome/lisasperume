@@ -61,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name[language]}
           </h3>
           <p className="text-amber-500 font-medium mb-2">
-            {lowestPrice !== Infinity ? `${lowestPrice.toFixed(2)} ${language === 'en' ? 'AED' : 'شيكل'}` : 'Out of Stock'}
+            {lowestPrice !== Infinity ? `${lowestPrice.toFixed(2)} ${language === 'en' ? '₪' : 'شيكل'}` : 'Out of Stock'}
           </p>
           <span className="text-sm text-gray-900 hover:text-amber-500 transition-colors">
             {language === 'en' ? 'Shop Now' : 'تسوق الآن'}

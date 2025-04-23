@@ -561,7 +561,7 @@ export default function ProductsPage() {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                className="px-6 py-2 bg-gray-500 text-gray-300 rounded-lg hover:bg-gray-200 transition-colors duration-200"
               >
                 {language === "en" ? "Cancel" : "إلغاء"}
               </button>
@@ -592,7 +592,7 @@ export default function ProductsPage() {
                     ></path>
                   </svg>
                 )}
-                <span>
+                <span className="text-black  hover:bg-gray-200 transition-colors duration-200 bg-amber-500 rounded-lg px-2 py-1 ">
                   {uploading
                     ? language === "en"
                       ? "Uploading..."
@@ -612,109 +612,93 @@ export default function ProductsPage() {
       )}
 
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Image" : "الصورة"}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Name" : "الاسم"}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Category" : "التصنيف"}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Sizes" : "المقاسات"}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Order" : "الترتيب"}
-              </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {language === "en" ? "Actions" : "الإجراءات"}
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="h-12 w-12 rounded-lg overflow-hidden">
-                    <Image
-                      src={product.imageUrl}
-                      alt={product.name[language]}
-                      width={48}
-                      height={48}
-                      className="object-cover"
-                    />
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {product.name[language]}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {categories.find((c) => c.id === product.categoryId)?.name[
-                      language
-                    ]}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-500 space-y-1">
-                    {product.sizes.map((size) => (
-                      <div key={size.size} className="flex items-center space-x-2">
-                        <span className="font-medium">{size.size}:</span>
-                        <span>
-                          {size.price} {language === "en" ? "AED" : "درهم"}
-                        </span>
-                        <span className="text-gray-400">|</span>
-                        <span
-                          className={`${
-                            size.stock > 0 ? "text-green-600" : "text-red-600"
-                          }`}
-                        >
-                          {size.stock}{" "}
-                          {language === "en" ? "in stock" : "متوفر"}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{product.order}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
-                  <button
-                    onClick={() => handleEdit(product)}
-                    className="group relative px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg overflow-hidden transition-all duration-300 hover:bg-indigo-100 hover:shadow-md hover:scale-105"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10 flex items-center space-x-1.5">
-                      <svg className="w-4 h-4 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
-                      <span className="font-medium">{language === "en" ? "Edit" : "تعديل"}</span>
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => handleDelete(product.id)}
-                    className="group relative px-3 py-1.5 bg-red-50 text-red-600 rounded-lg overflow-hidden transition-all duration-300 hover:bg-red-100 hover:shadow-md hover:scale-105"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10 flex items-center space-x-1.5">
-                      <svg className="w-4 h-4 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      <span className="font-medium">{language === "en" ? "Delete" : "حذف"}</span>
-                    </div>
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Image" : "الصورة"}
+                </th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Name" : "الاسم"}
+                </th>
+                <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Category" : "التصنيف"}
+                </th>
+                <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Sizes" : "المقاسات"}
+                </th>
+                <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Order" : "الترتيب"}
+                </th>
+                <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {language === "en" ? "Actions" : "الإجراءات"}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {products.map((product) => (
+                <tr key={product.id} className="hover:bg-gray-50">
+                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                    <div className="h-10 w-10 rounded-full overflow-hidden">
+                      <Image
+                        src={product.imageUrl}
+                        alt={product.name[language]}
+                        width={40}
+                        height={40}
+                        className="object-cover"
+                      />
+                    </div>
+                  </td>
+                  <td className="px-4 sm:px-6 py-4">
+                    <div className="text-sm font-medium text-gray-900">
+                      {product.name[language]}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
+                    </div>
+                  </td>
+                  <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
+                    </div>
+                  </td>
+                  <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-wrap gap-1">
+                      {product.sizes.map((size) => (
+                        <span
+                          key={size.size}
+                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                        >
+                          {size.size}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{product.order}</div>
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        {language === "en" ? "Edit" : "تعديل"}
+                      </button>
+                      <button
+                        onClick={() => handleDelete(product.id)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        {language === "en" ? "Delete" : "حذف"}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

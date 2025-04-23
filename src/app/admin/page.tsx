@@ -31,9 +31,9 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div className="px-4 py-6 sm:px-0">
-          <h1 className="text-3xl font-bold text-gray-900" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900" dir={language === 'ar' ? 'rtl' : 'ltr'}>
             {language === 'en' ? 'Admin Dashboard' : 'لوحة تحكم المسؤول'}
           </h1>
           
@@ -44,7 +44,7 @@ export default function AdminPage() {
 
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {/* Quick Links */}
-            <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -64,7 +64,7 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -84,7 +84,7 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-200">
               <div className="p-5">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
