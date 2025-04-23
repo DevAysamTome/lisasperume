@@ -59,7 +59,12 @@ export const updateProductStock = async (productId: string, size: number, quanti
       return s;
     });
 
-    await updateDoc(productRef, { sizes });
+    // Increment the soldCount by the quantity ordered
+    const currentSoldCount = productData.soldCount || 0;
+    await updateDoc(productRef, { 
+      sizes,
+      soldCount: currentSoldCount + quantity 
+    });
   } catch (error) {
     console.error('Error updating product stock:', error);
     throw error;
