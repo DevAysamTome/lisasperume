@@ -79,7 +79,7 @@ export default function AboutPage() {
             className="space-y-6"
           >
             <div className="prose prose-lg max-w-none">
-              <p className="text-black-600 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 {language === 'en' ? content?.content_en : content?.content_ar}
               </p>
             </div>

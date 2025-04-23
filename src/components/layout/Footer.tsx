@@ -50,11 +50,11 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Store Info */}
-          <div className="col-span-2 sm:col-span-2 lg:col-span-1 text-center sm:text-left space-y-2 sm:space-y-3">
+          <div className={`col-span-2 sm:col-span-2 lg:col-span-1 text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'} space-y-2 sm:space-y-3`}>
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold">
-              {settings?.storeName_en || settings?.storeName_ar}
+              {language === 'ar' ? settings?.storeName_ar : settings?.storeName_en}
             </h3>
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
               {language === 'en' ? settings?.storeDescription_en : settings?.storeDescription_ar}
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="text-center sm:text-left space-y-2 sm:space-y-3">
+          <div className={`text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'} space-y-2 sm:space-y-3`}>
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold">
               {language === 'en' ? 'Quick Links' : 'روابط سريعة'}
             </h3>
@@ -91,15 +91,15 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="text-center sm:text-left space-y-2 sm:space-y-3">
+          <div className={`text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'} space-y-2 sm:space-y-3`}>
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold">
               {language === 'en' ? 'Contact Us' : 'اتصل بنا'}
             </h3>
             <ul className="space-y-1.5">
-              <li className="text-gray-400 text-xs sm:text-sm">
-                {settings?.address_en || settings?.address_ar}
+              <li className="text-gray-400 text-xs sm:text-sm ">
+                {language === 'en' ? settings?.address_en : settings?.address_ar}
               </li>
-              <li className="text-gray-400 text-xs sm:text-sm">
+              <li className="text-gray-400 text-xs sm:text-sm ">
                 {settings?.contactPhone}
               </li>
               <li className="text-gray-400 text-xs sm:text-sm">
@@ -109,11 +109,11 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="text-center sm:text-left space-y-2 sm:space-y-3">
+          <div className={`text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'} space-y-2 sm:space-y-3`}>
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold">
               {language === 'en' ? 'Follow Us' : 'تابعنا'}
             </h3>
-            <div className="flex justify-center sm:justify-start space-x-3 sm:space-x-4">
+            <div className={`flex justify-center ${language === 'ar' ? 'sm:justify-end space-x-reverse' : 'sm:justify-start space-x-3'} sm:space-x-4`}>
               {settings?.socialMedia.facebook && (
                 <a
                   href={settings.socialMedia.facebook}
@@ -157,9 +157,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-800 text-center">
+        <div className={`mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-800 text-center ${language === 'ar' ? 'text-right' : 'text-left'}`}>
           <p className="text-gray-400 text-xs sm:text-sm">
-            &copy; {new Date().getFullYear()} {settings?.storeName_en || settings?.storeName_ar}.{' '}
+            &copy; {new Date().getFullYear()} {language === 'ar' ? settings?.storeName_ar : settings?.storeName_en}.{' '}
             {language === 'en' ? 'All rights reserved to TechnoCore , LLC.' : 'جميع الحقوق محفوظة لدى شركة تكنو كور'}
           </p>
         </div>
