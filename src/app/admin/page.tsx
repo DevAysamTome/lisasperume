@@ -6,7 +6,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import OrderStats from '@/components/admin/OrderStats';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function AdminPage() {
   const { user, loading } = useAuth();
   const { language } = useLanguage();

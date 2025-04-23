@@ -10,7 +10,6 @@ import { Loader2, Heart, AlertCircle } from 'lucide-react';
 import { Product } from '@/types';
 import Image from 'next/image';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function FavoritesPage() {
   const { language } = useLanguage();
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);

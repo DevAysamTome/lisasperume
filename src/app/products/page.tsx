@@ -51,7 +51,6 @@ interface Category {
   updatedAt: Date;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductsPage() {
   const { language } = useLanguage();
   const [products, setProducts] = useState<Product[]>([]);

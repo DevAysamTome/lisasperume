@@ -27,7 +27,6 @@ export const metadata: Metadata = {
   description: "Luxury perfumes for everyone",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function RootLayout({
   children,
 }: {

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/admin';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function DashboardClient() {
   const [stats, setStats] = useState({
     totalProducts: '0',

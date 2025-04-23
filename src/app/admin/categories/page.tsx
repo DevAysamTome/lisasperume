@@ -23,7 +23,6 @@ interface Category {
   order: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CategoriesPage() {
   const { language } = useLanguage();
   const [categories, setCategories] = useState<Category[]>([]);

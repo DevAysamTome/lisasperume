@@ -5,7 +5,6 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminNavbar from '@/components/admin/AdminNavbar';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function AdminLayout({
   children,
 }: {

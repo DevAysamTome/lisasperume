@@ -45,7 +45,6 @@ const defaultSizes = [
   { size: '100ml', price: 0, stock: 0 },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductsPage() {
   const { language } = useLanguage();
   const [products, setProducts] = useState<Product[]>([]);

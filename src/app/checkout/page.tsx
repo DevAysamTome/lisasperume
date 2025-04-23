@@ -8,7 +8,6 @@ import toast from 'react-hot-toast';
 import { FiArrowLeft } from 'react-icons/fi';
 import { saveOrder } from '@/services/firebase';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CheckoutPage() {
   const { items, clearCart } = useCart();
   const { language } = useLanguage();

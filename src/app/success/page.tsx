@@ -4,7 +4,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { FiCheckCircle } from 'react-icons/fi';
 import Link from 'next/link';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SuccessPage() {
   const { language } = useLanguage();
 

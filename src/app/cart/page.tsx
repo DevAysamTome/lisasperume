@@ -7,7 +7,6 @@ import { FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCart();
   const { language } = useLanguage();

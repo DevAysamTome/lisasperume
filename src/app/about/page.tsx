@@ -15,7 +15,6 @@ interface AboutContent {
   image: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function AboutPage() {
   const { language } = useLanguage();
   const [content, setContent] = useState<AboutContent | null>(null);
