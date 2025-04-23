@@ -22,41 +22,52 @@ interface Product {
     price: number;
     stock: number;
   }[];
-  isFeatured?: boolean;
-  soldCount?: number;
 }
 
-interface BestSellersProps {
+interface Category {
+  id: string;
+  name: {
+    en: string;
+    ar: string;
+  };
+  description: {
+    en: string;
+    ar: string;
+  };
+  imageUrl: string;
+  order: number;
+}
+
+interface CategoryProductsProps {
+  category: Category;
   products: Product[];
 }
 
-export default function BestSellers({ products }: BestSellersProps) {
+export default function CategoryProducts({ category, products }: CategoryProductsProps) {
   const { language } = useLanguage();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const bestSellers = products?.filter(p => (p.soldCount || 0) > 0).slice(0, 8) || [];
+  const categoryProducts = products?.filter(product => product.categoryId === category.id).slice(0, 8) || [];
 
   const content = {
     en: {
-      title: 'Best Sellers',
       viewAll: 'VIEW ALL',
       shopNow: 'Shop Now',
-      noProducts: 'No best sellers available yet'
+      noProducts: 'No products available in this category'
     },
     ar: {
-      title: 'الأكثر مبيعاً',
       viewAll: 'عرض الكل',
       shopNow: 'تسوق الآن',
-      noProducts: 'لا توجد منتجات الأكثر مبيعاً حتى الآن'
+      noProducts: 'لا توجد منتجات متاحة في هذه الفئة'
     }
   };
 
-  if (!products || bestSellers.length === 0) {
+  if (!products || categoryProducts.length === 0) {
     return (
       <section className="py-8 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">
-              {content[language].title}
+            <h2 className="text-2xl font-semibold text-gray-900" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+              {category.name[language]}
             </h2>
           </div>
           <div className="text-center py-12">
@@ -84,14 +95,14 @@ export default function BestSellers({ products }: BestSellersProps) {
   };
 
   return (
-    <section className="py-8 px-4 bg-white" >
+    <section className="py-8 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {content[language].title}
+          <h2 className="text-2xl font-semibold text-gray-900" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+            {category.name[language]}
           </h2>
           <Link 
-            href="/products" 
+            href={`/categories/${category.id}`}
             className="text-amber-500 hover:text-amber-600 font-medium"
           >
             {content[language].viewAll}
@@ -112,7 +123,7 @@ export default function BestSellers({ products }: BestSellersProps) {
             className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {bestSellers.map((product) => (
+            {categoryProducts.map((product) => (
               <div key={product.id} className="flex-none w-[250px]">
                 <ProductCard product={product} />
               </div>

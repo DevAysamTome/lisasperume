@@ -109,11 +109,11 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className={`text-center ${language === 'ar' ? 'sm:text-right' : 'sm:text-left'} space-y-2 sm:space-y-3`}>
+          <div className={`text-center align-middle ${language === 'ar' ? 'sm:text-center' : 'sm:text-center'} space-y-2 sm:space-y-3`}>
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold">
               {language === 'en' ? 'Follow Us' : 'تابعنا'}
             </h3>
-            <div className={`flex justify-center ${language === 'ar' ? 'sm:justify-end space-x-reverse' : 'sm:justify-start space-x-3'} sm:space-x-4`}>
+            <div className={`flex justify-center align-middle ${language === 'ar' ? 'sm:justify-end space-x-reverse' : 'sm:justify-start space-x-3'} sm:space-x-4`}>
               {settings?.socialMedia.facebook && (
                 <a
                   href={settings.socialMedia.facebook}

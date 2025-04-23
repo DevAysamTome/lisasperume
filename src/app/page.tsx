@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import CategoryCard from '@/components/products/CategoryCard';
 import BestSellers from '@/components/products/BestSellers';
 import ProductCard from '@/components/products/ProductCard';
+import CategoryProducts from '@/components/products/CategoryProducts';
 
 interface Product {
   id: string;
@@ -29,6 +30,8 @@ interface Product {
     price: number;
     stock: number;
   }[];
+  isFeatured?: boolean;
+  soldCount?: number;
 }
 
 interface Category {
@@ -37,7 +40,12 @@ interface Category {
     en: string;
     ar: string;
   };
+  description: {
+    en: string;
+    ar: string;
+  };
   imageUrl: string;
+  order: number;
 }
 
 interface Settings {
@@ -74,11 +82,10 @@ export default function Home() {
 
       // Fetch products
       const productsRef = collection(db, 'products');
-      const productsQuery = query(productsRef, orderBy('order', 'asc'));
+      const productsQuery = query(productsRef);
       const productsSnapshot = await getDocs(productsQuery);
       const productsData = productsSnapshot.docs.map(doc => {
         const data = doc.data();
-        console.log('Product data:', data); // Debug log
         return {
           id: doc.id,
           name: data.name || { en: '', ar: '' },
@@ -86,10 +93,11 @@ export default function Home() {
           imageUrl: data.imageUrl || '',
           images: data.images || [],
           categoryId: data.categoryId || '',
-          sizes: data.sizes || []
+          sizes: data.sizes || [],
+          isFeatured: data.isFeatured || false,
+          soldCount: data.soldCount || 0
         };
       }) as Product[];
-      console.log('Processed products:', productsData); // Debug log
       setProducts(productsData);
 
       // Fetch categories
@@ -237,7 +245,7 @@ export default function Home() {
       </section>
 
       {/* Best Sellers Section */}
-      <BestSellers products={products} />
+      <BestSellers products={products.sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0))} />
 
       {/* Featured Products Section */}
       <section className="py-12 sm:py-16 lg:py-24 px-4 bg-gray-50">
@@ -260,7 +268,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {products.slice(0, 4).map((product, index) => (
+            {products.filter(product => product.isFeatured).slice(0, 4).map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -274,6 +282,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+            {/* Category Products Sections */}
+      {categories.map((category) => (
+        <CategoryProducts
+          key={category.id}
+          category={category}
+          products={products}
+        />
+      ))}
     </main>
   );
 }

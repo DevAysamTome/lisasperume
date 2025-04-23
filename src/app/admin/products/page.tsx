@@ -37,6 +37,8 @@ interface Product {
   imageUrl: string;
   sizes: ProductSize[];
   order: number;
+  isFeatured: boolean;
+  soldCount: number;
 }
 
 const defaultSizes = [
@@ -59,6 +61,8 @@ export default function ProductsPage() {
     imageUrl: "",
     sizes: [{ size: "", price: 0, stock: 0 }],
     order: 0,
+    isFeatured: false,
+    soldCount: 0
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -142,6 +146,8 @@ export default function ProductsPage() {
         imageUrl: "",
         sizes: [{ size: "", price: 0, stock: 0 }],
         order: 0,
+        isFeatured: false,
+        soldCount: 0
       });
       setEditingProduct(null);
       setImageFile(null);
@@ -197,6 +203,8 @@ export default function ProductsPage() {
       imageUrl: product.imageUrl,
       sizes: product.sizes,
       order: product.order,
+      isFeatured: product.isFeatured,
+      soldCount: product.soldCount,
     });
     setShowForm(true);
   };
@@ -211,6 +219,8 @@ export default function ProductsPage() {
       imageUrl: "",
       sizes: [{ size: "", price: 0, stock: 0 }],
       order: 0,
+      isFeatured: false,
+      soldCount: 0
     });
     setImageFile(null);
   };
@@ -538,6 +548,50 @@ export default function ProductsPage() {
                 </div>
               </div>
 
+              <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {language === "en" ? "Featured Product" : "منتج مميز"}
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={newProduct.isFeatured}
+                      onChange={(e) =>
+                        setNewProduct({
+                          ...newProduct,
+                          isFeatured: e.target.checked,
+                        })
+                      }
+                      className="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+                    />
+                    <span className="ml-2 text-sm text-gray-600">
+                      {language === "en"
+                        ? "Display this product in featured section"
+                        : "عرض هذا المنتج في قسم المميز"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {language === "en" ? "Sold Count" : "عدد المبيعات"}
+                  </label>
+                  <input
+                    type="number"
+                    value={newProduct.soldCount}
+                    onChange={(e) =>
+                      setNewProduct({
+                        ...newProduct,
+                        soldCount: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    min="0"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   {language === "en" ? "Order" : "الترتيب"}
@@ -611,93 +665,111 @@ export default function ProductsPage() {
         </motion.div>
       )}
 
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Image" : "الصورة"}
-                </th>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Name" : "الاسم"}
-                </th>
-                <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Category" : "التصنيف"}
-                </th>
-                <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Sizes" : "المقاسات"}
-                </th>
-                <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Order" : "الترتيب"}
-                </th>
-                <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {language === "en" ? "Actions" : "الإجراءات"}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50">
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                    <div className="h-10 w-10 rounded-full overflow-hidden">
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name[language]}
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
-                    </div>
-                  </td>
-                  <td className="px-4 sm:px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {product.name[language]}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
-                    </div>
-                  </td>
-                  <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
-                    </div>
-                  </td>
-                  <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
-                    <div className="flex flex-wrap gap-1">
-                      {product.sizes.map((size) => (
-                        <span
-                          key={size.size}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
-                        >
-                          {size.size}
+      <div className="mt-8 flex flex-col">
+        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Image" : "الصورة"}
+                    </th>
+                    <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Name" : "الاسم"}
+                    </th>
+                    <th scope="col" className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Category" : "التصنيف"}
+                    </th>
+                    <th scope="col" className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Sizes" : "المقاسات"}
+                    </th>
+                    <th scope="col" className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Featured" : "مميز"}
+                    </th>
+                    <th scope="col" className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Sold" : "المبيعات"}
+                    </th>
+                    <th scope="col" className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {language === "en" ? "Actions" : "الإجراءات"}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {products.map((product) => (
+                    <tr key={product.id} className="hover:bg-gray-50">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="h-10 w-10 rounded-full overflow-hidden">
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name[language]}
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="text-sm font-medium text-gray-900">
+                          {product.name[language]}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
+                        </div>
+                      </td>
+                      <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {product.categoryId && categories.find((c) => c.id === product.categoryId)?.name[language]}
+                        </div>
+                      </td>
+                      <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                        <div className="flex flex-wrap gap-1">
+                          {product.sizes.map((size) => (
+                            <span
+                              key={size.size}
+                              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                            >
+                              {size.size}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          product.isFeatured ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {product.isFeatured ? (
+                            language === "en" ? "Featured" : "مميز"
+                          ) : (
+                            language === "en" ? "Not Featured" : "غير مميز"
+                          )}
                         </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{product.order}</div>
-                  </td>
-                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end space-x-2">
-                      <button
-                        onClick={() => handleEdit(product)}
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        {language === "en" ? "Edit" : "تعديل"}
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        {language === "en" ? "Delete" : "حذف"}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      </td>
+                      <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {product.soldCount || 0}
+                        </div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium">
+                        <button
+                          onClick={() => handleEdit(product)}
+                          className="text-indigo-600 hover:text-indigo-900 mr-4"
+                        >
+                          {language === "en" ? "Edit" : "تعديل"}
+                        </button>
+                        <button
+                          onClick={() => handleDelete(product.id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          {language === "en" ? "Delete" : "حذف"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
